@@ -17,7 +17,6 @@ def evaluation(myNet, test_loader, args):
         for xs, ys in test_loader:
             if torch.cuda.is_available():
                 xs, ys = xs.cuda(), ys.cuda()
-            xs, ys = Variable(xs), Variable(ys)
             ypreds = myNet(xs)
             _, preds = torch.max(ypreds, -1)
             num_correct += float((preds == ys).int().sum().data) # because (preds == ys) is only 8-bit range 
@@ -38,7 +37,6 @@ def bayes_training_evaluation(myNet, optimizer, train_loader, test_loader, args)
             for xs, ys in train_loader:
                 if torch.cuda.is_available():
                     xs, ys = xs.cuda(), ys.cuda()
-                xs, ys = Variable(xs), Variable(ys)
                 
                 optimizer.zero_grad()
                 
