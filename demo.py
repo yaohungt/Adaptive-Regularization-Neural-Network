@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Description: Demo_MNIST
+# Description: Demo code for NeurIPS 2019 paper: Learning Neural Networks with Adaptive Regularization
 
 import argparse
 import torch
