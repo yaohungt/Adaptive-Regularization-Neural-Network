@@ -24,17 +24,17 @@ In this paper we propose a method, **AdaReg**, to perform an adaptive and data-d
 
 ![](./img/git_figure.png)
 
-To summarize, for a fully connected layer (usually the last layer) $W\in\mathbb{R}^{d\times p}$, **AdaReg** maintains two additional covariance matrices:
+To summarize, for a fully connected layer (usually the last layer) <img src="https://latex.codecogs.com/svg.latex?W\in\mathbb{R}^{d\times\,p}" />, **AdaReg** maintains two additional covariance matrices:
 
-*   Row covariance matrix $\Sigma_r\in\mathbb{S}_{++}^p$
-*   Column covariance matrix $\Sigma_c\in\mathbb{S}_{++}^d$
+*   Row covariance matrix <img src="https://latex.codecogs.com/svg.latex?\Sigma_r\in\mathbb{S}_{++}^p" />
+*   Column covariance matrix <img src="https://latex.codecogs.com/svg.latex?\Sigma_c\in\mathbb{S}_{++}^d" />
 
-During the training phase, **AdaReg** updates both $W, \Sigma_r$ and $\Sigma_c$ in a coordinate descent way. As usual, the update of $W$ could use any off-the-shelf optimizers provided by PyTorch. To update two covariance matrices, we derive closed form algorithm to achieve the optimal solution given any fixed $W$. Essentially, the algorithm contains two steps:
+During the training phase, **AdaReg** updates both <img src="https://latex.codecogs.com/svg.latex?W,\Sigma_r" /> and <img src="https://latex.codecogs.com/svg.latex?\Sigma_c" /> in a coordinate descent way. As usual, the update of <img src="https://latex.codecogs.com/svg.latex?W" /> could use any off-the-shelf optimizers provided by PyTorch. To update two covariance matrices, we derive closed form algorithm to achieve the optimal solution given any fixed <img src="https://latex.codecogs.com/svg.latex?W" />. Essentially, the algorithm contains two steps:
 
-*   Compute a SVD of a matrix of size $d\times d$ or $p\times p$
-*   Truncate all the singular values into the range $(u, v)$. That is, for all the singular values smaller than $u$, set them to be $u$. Similarly, for all the singular values greater than $v$, set them to be $v$.
+*   Compute a SVD of a matrix of size <img src="https://latex.codecogs.com/svg.latex?d\times\,d" /> or <img src="https://latex.codecogs.com/svg.latex?p\times\,p" />
+*   Truncate all the singular values into the range <img src="https://latex.codecogs.com/svg.latex?(u,v)" />. That is, for all the singular values smaller than <img src="https://latex.codecogs.com/svg.latex?u" />, set them to be <img src="https://latex.codecogs.com/svg.latex?u" />. Similarly, for all the singular values greater than <img src="https://latex.codecogs.com/svg.latex?v" />, set them to be <img src="https://latex.codecogs.com/svg.latex?v" />.
 
-The choice of hyperparameter $(u, v)$ should satisfy $0 < u < 1$ and $v > 1$. In practice and in our experiments we fix them to be $u = 1e-3$ and $v = 1e3$. Pseudo-code of the algorithm is shown in the following figure.
+The choice of hyperparameter <img src="https://latex.codecogs.com/svg.latex?(u,v)" /> should satisfy <img src="https://latex.codecogs.com/svg.latex?0<u<1" /> and <img src="https://latex.codecogs.com/svg.latex?v>1" />. In practice and in our experiments we fix them to be <img src="https://latex.codecogs.com/svg.latex?u=1e-3" /> and <img src="https://latex.codecogs.com/svg.latex?v=1e3" />. Pseudo-code of the algorithm is shown in the following figure.
 
 ![](./img/pseudo.png)
 
@@ -95,7 +95,7 @@ def update_covs(self, lower, upper):
     self.sqrt_covf.data = torch.mm(torch.mm(cf, torch.diag(sf)), cf.t())
 ```
 
-Finally, we need to use the optimized covariance matrices to regularize the learning of our weight matrix $W$ (our goal!):
+Finally, we need to use the optimized covariance matrices to regularize the learning of our weight matrix <img src="https://latex.codecogs.com/svg.latex?W" /> (our goal!):
 
 ```python
 def regularizer(self):
@@ -106,7 +106,7 @@ def regularizer(self):
     return torch.sum(r * r)
 ```
 
-Add this regularizer back to our favorite objective function (cross-entropy, mean-squared-error, etc) and backpropagate to update $W$, done!
+Add this regularizer back to our favorite objective function (cross-entropy, mean-squared-error, etc) and backpropagate to update <img src="https://latex.codecogs.com/svg.latex?W" />, done!
 
 
 ## Have a try yourself on MNIST and CIFAR:
