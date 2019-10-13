@@ -68,7 +68,7 @@ def _thresholding(self, sv, lower, upper):
     return sv
 ```
 
-The overall$ algorithm for updating both covariance matrices can then be implemented as:
+The overall algorithm for updating both covariance matrices can then be implemented as:
 ```python
 def update_covs(self, lower, upper):
     """
