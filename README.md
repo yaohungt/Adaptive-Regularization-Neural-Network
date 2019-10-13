@@ -42,7 +42,7 @@ The choice of hyperparameter <img src="https://latex.codecogs.com/svg.latex?(u,v
 
 Really simple! Here we give a minimum code snippet (in PyTorch) to illustrate the main idea. For the full implementation, please see function `BayesNet(args)` in `src/model.py` for more details.
 
-First, for the weight matrix $W$, we need to define two covariance matrices:
+First, for the weight matrix <img src="https://latex.codecogs.com/svg.latex?W" />, we need to define two covariance matrices:
 
 ```python
 # Define two covariance matrices (in sqrt):
